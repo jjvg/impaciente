@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAmistadsTable extends Migration
+class CreateRelacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAmistadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('amistads', function (Blueprint $table) {
+        Schema::create('relacions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('solicitud');
             $table->integer('user_solicitante');
@@ -29,6 +29,6 @@ class CreateAmistadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('amistads');
+        Schema::dropIfExists('relacions');
     }
 }

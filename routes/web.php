@@ -43,20 +43,20 @@ Route::group(['middleware' => 'auth'],function(){
 
 	Route::get('/check_status_amistades/{id}', [
 
-		'uses' => 'AmistadController@check',
+		'uses' => 'RelacionController@check',
 		'as'   => 'check'
 
 		]);
-	Route::get('/agregar_amigo/{id}', [
+	Route::get('/agregar_paciente/{id}', [
 
-		'uses' => 'AmistadController@agregar_amigo',
-		'as'   => 'agregar_amigo'
+		'uses' => 'RalacionController@agregar_relacion',
+		'as'   => 'agregar_paciente'
 
 		]);
-	Route::get('/aceptar_amigo/{id}', [
+	Route::get('/aceptar_tratante/{id}', [
 
-		'uses' => 'AmistadController@aceptar_amigo',
-		'as'   => 'aceptar_amigo'
+		'uses' => 'RelacionController@aceptar_relacion',
+		'as'   => 'aceptar_tratante'
 
 		]);
 

@@ -1,37 +1,37 @@
 <?php
 
 namespace App\Traits;
-use App\Amistad;
+use App\Relacion;
 trait Friendable
 {
 	// METODO PARA SOLICITAR AGREGAR UN NUEVO AMIGO
-	public function agregar_amigo($user_solicitante_id)
+	public function agregar_relacion($user_solicitante_id)
 	{
 
 		if ($this->id === $user_solicitante_id) {
 			return 0;
 		}
 
-		if ($this->Tiene_una_solicitud_de_amistad_pendiente_enviada_a($user_solicitante_id)===1) {
+		if ($this->Tiene_una_solicitud_de_relacion_pendiente_enviada_a($user_solicitante_id)===1) {
 			return "Ya existe una solicitud enviada a ese usuario";
 		}
 
-		if ($this->Tiene_una_solicitud_de_amistad_pendiente_de($user_solicitante_id)===1) {
+		if ($this->Tiene_una_solicitud_de_relacion_pendiente_de($user_solicitante_id)===1) {
 			return $this->aceptar_amigo($user_solicitante_id);
 		}
 
-		if ($this->es_amigo_de($user_solicitante_id)===1) {
-			return "Ya son amigos";
+		if ($this->es_paciente_de($user_solicitante_id)===1) {
+			return "Ya tienen una relacion paciente doctor";
 			
 		}
 
-		$amistad = Amistad::create([
+		$relacion = Relacion::create([
 
 			'solicitud' => $this->id,
 			'user_solicitante'=> $user_solicitante_id
 		]);
 
-		if ($amistad)
+		if ($relacion)
 		 {
 
 			return 1;
@@ -42,20 +42,20 @@ trait Friendable
 
 
 // METODO PARA ACEPTAR UN AMIGO NUEVO
-	public function aceptar_amigo($solicitud)
+	public function aceptar_relacion($solicitud)
 	{
-		if ($this->Tiene_una_solicitud_de_amistad_pendiente_de($solicitud)===0) {
+		if ($this->Tiene_una_solicitud_de_relacion_pendiente_de($solicitud)===0) {
 			return 0;
 		}
 
-		$amistad = Amistad::where('solicitud', $solicitud)
+		$relacion = Relacion::where('solicitud', $solicitud)
 							->where('user_solicitante', $this->id)
 							->first();
 
-		if ($amistad) 
+		if ($relacion) 
 		{
 			
-			$amistad->update([
+			$relacion->update([
 
 				'status' => 1
 
@@ -72,26 +72,26 @@ trait Friendable
 // METODOOOO LISTA DE AMiGOS
 	public function amigos()
 	{
-		$amigos =  array( );
+		$relacion =  array( );
 
-		$f1 = Amistad::where('status',1)->where('solicitud', $this->id)->get();
+		$f1 = Relacion::where('status',1)->where('solicitud', $this->id)->get();
 
-		foreach ($f1 as $amistad): 
+		foreach ($f1 as $relacion): 
 			
-			array_push($amigos,\App\User::find($amistad->user_solicitante) );
+			array_push($relacion,\App\User::find($relacion->user_solicitante) );
 		endforeach;
 		
-		$amigos2 =  array( );
+		$relacion2 =  array( );
 
-		$f2 = Amistad::where('status',1)->where('user_solicitante', $this->id)->get();
+		$f2 = Relacion::where('status',1)->where('user_solicitante', $this->id)->get();
 
-		foreach ($f2 as $amistad): 
+		foreach ($f2 as $relacion2): 
 			
-			array_push($amigos2,\App\User::find($amistad->solicitud) );
+			array_push($relacion2,\App\User::find($relacion->solicitud) );
 		endforeach;
 
 
-		return array_merge($amigos,$amigos2);
+		return array_merge($relacion,$relacion2);
 		
 	}
 
@@ -103,7 +103,7 @@ trait Friendable
 
 
 //METODO PARA RETORNAR SI TIENE AMIGOS EN COMUN EN EL ARREGLO CON ALGUN SOLICITANTE
-	public function es_amigo_de($user_id)
+	public function es_paciente_de($user_id)
 	{
 		if (in_array($user_id, $this-> amigos_ids())) 
 		{
@@ -120,9 +120,9 @@ trait Friendable
 	{
 		$users =  array( );
 
-		$amistades = Amistad::where('status',0)->where('user_solicitante', $this->id)->get();
+		$relaciones = Relacion::where('status',0)->where('user_solicitante', $this->id)->get();
 
-		foreach ($amistades as $amistad): 
+		foreach ($relaciones as $amistad): 
 			
 			array_push($users,\App\User::find($amistad->solicitud) );
 		endforeach;
@@ -141,11 +141,11 @@ trait Friendable
 	}
 
 // METODO QUE RETORNA ARREGLO CON LAS SOLICItuDES DE AMISTAD ENVIADAS POR UN USUARIO
-	public function solicitud_de_amistad_enviadas()
+	public function solicitud_de_relacion_enviadas()
 	{
 		$users =  array( );
 
-		$amistades = Amistad::where('status',0)->where('solicitud', $this->id)->get();
+		$amistades = Relaciones::where('status',0)->where('solicitud', $this->id)->get();
 
 		foreach ($amistades as $amistad): 
 			
@@ -156,14 +156,14 @@ trait Friendable
 	}
 
 //METODO QUE RETORNA ARREGLO CCON EL ID DE LAS SOLICITUDES DE AMISTAD ENVIADAS 
-	public function solicitud_de_amistad_enviadas_ids()
+	public function solicitud_de_relacion_enviadas_ids()
 	{
-		return  collect($this->solicitud_de_amistad_enviadas())->pluck('id')->toArray();
+		return  collect($this->solicitud_de_relacion_enviadas())->pluck('id')->toArray();
 	}
 
 
 //METODO PARA RETORNAR UNA NOTIFICACION DE SOLICITUD DE AMISTAD PENDIENTE
-	public function Tiene_una_solicitud_de_amistad_pendiente_de($user_id)
+	public function Tiene_una_solicitud_de_relacion_pendiente_de($user_id)
 	{
 		if (in_array($user_id, $this->solicitudes_pendientes_ids())) 
 		{
@@ -176,9 +176,9 @@ trait Friendable
 	}
 
 //METODO QUE RETORNA UNA NOTIFICACION DE SOLICITUD DE AMISTAD ENVIADA PENDENTE POR RESPONDER
-	public function  Tiene_una_solicitud_de_amistad_pendiente_enviada_a($user_id)
+	public function  Tiene_una_solicitud_de_relacion_pendiente_enviada_a($user_id)
 	{
-		if (in_array($user_id, $this->solicitud_de_amistad_enviadas_ids())) 
+		if (in_array($user_id, $this->solicitud_de_relacion_enviadas_ids())) 
 		{
 			return 1;
 		} 
