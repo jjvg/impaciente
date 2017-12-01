@@ -50,15 +50,15 @@
                             <li><a href="{{ route('register') }}"><font color=white></font></a></li>
                         @else
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color:white" aria-expanded="false"><font color=white>
+                                    {{ Auth::user()->name }}</font><span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><font color=white>
+                                                     document.getElementById('logout-form').submit();"><font color=red>
                                             Salir</font>
                                         </a>
 
