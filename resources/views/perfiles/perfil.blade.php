@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="col-lg-4">
-		<div class="panel panel-warning">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 
 				<p class="text-center">
@@ -36,7 +36,7 @@
 
 					@if(Auth::id() == $user->id)
 
-							<a href="{{route('perfil.edit')}}" class="btn bnt-lg btn-warning">Editar Perfil</a>
+							<a href="{{route('perfil.edit')}}" class="btn bnt-lg btn-info">Editar Perfil</a>
 					@endif
 					
 				</p>
@@ -53,7 +53,7 @@
 		</div>
 		
 		
-			<div class="panel panel-warning">
+			<div class="panel panel-info">
 			<div class="panel-heading">
 
 				<p class="text-center">

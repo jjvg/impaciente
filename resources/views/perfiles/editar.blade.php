@@ -5,7 +5,7 @@
     
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-warning">
+            <div class="panel panel-info">
                 <div class="panel-heading">Edita tu perfil</div>
 
                 <div class="panel-body">
@@ -16,11 +16,9 @@
                         <div class="form-group">
 
                             <label for="avatar">Subir Avatar</label>
-                            <span class="btn btn-warning btn-file">
+                            <span class="btn btn-info btn-file">
                                 <input type="file" class="file" name="avatar" accept="image/*">
                             </span>
-                           
-                        </div>
 
                         <div class="form-group">
 
@@ -39,7 +37,7 @@
                         <div class="form-group">
 
                            <p class="text-center">
-                               <button class="btn btn-warning btn-lg" type="submit">
+                               <button class="btn btn-info btn-lg" type="submit">
                                     Guardar Cambios     
                                </button>
                            </p>     
@@ -51,6 +49,8 @@
             </div>
         </div>
     </div>
+ 
 </div>
+
                            
 @endsection

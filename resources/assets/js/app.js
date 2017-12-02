@@ -1,5 +1,6 @@
 window.Noty = require('noty');
 import Noty from 'noty';
+import Vue from 'vue';
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -16,8 +17,8 @@ require('vue-resource');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('friend', require('./components/Friend.vue'));
-
+Vue.component('friend', require('./components/Friend.vue', ));
 const app = new Vue({
     el: '#app'
+
 });
